@@ -1,0 +1,339 @@
+:root {
+  --en-color: #1a1a1a;
+  --zh-color: #2a2a2a;
+  --zh-bg: #f7f8fa;
+  --accent: #2f7d5a;
+  --accent-bg: #eef8f2;
+  --border: #e3e5e8;
+  --muted: #6b7280;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", Roboto, sans-serif;
+  color: var(--en-color);
+  background: #ffffff;
+  line-height: 1.7;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 28px 80px;
+}
+
+/* Top nav */
+.topnav {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.topnav-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-links { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+
+.nav-links a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.nav-links a:hover { text-decoration: underline; }
+
+.nav-links span.disabled {
+  color: #bbb;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Read-aloud (TTS) controls */
+.tts-global-btn {
+  border: 1px solid var(--accent);
+  background: #fff;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tts-global-btn.speaking {
+  background: var(--accent);
+  color: #fff;
+}
+
+.tts-bar {
+  text-align: right;
+  margin-bottom: 6px;
+}
+
+.tts-btn {
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.tts-btn:hover {
+  background: rgba(47, 125, 90, 0.1);
+}
+.tts-btn.speaking {
+  background: var(--accent);
+  color: #fff;
+}
+
+.tts-rate-select {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: #444;
+  font-size: 12px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  max-width: 220px;
+}
+
+/* Click-to-read: any paragraph/bullet (English or its paired Chinese one) can be clicked
+   to hear just that sentence. */
+.tts-clickable {
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.tts-clickable:hover {
+  background: rgba(47, 125, 90, 0.08);
+  border-radius: 4px;
+}
+
+/* Follow-along highlight: applied to the individual <p>/<li> being read, not the whole column,
+   so it always stays visible on screen instead of scrolling off with a tall block. */
+p.tts-active,
+li.tts-active {
+  background: var(--accent-bg);
+  box-shadow: -4px 0 0 var(--accent) inset;
+  border-radius: 4px;
+  padding-left: 8px;
+  margin-left: -8px;
+  transition: background .15s ease;
+}
+
+.lang-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.lang-toggle button {
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #444;
+}
+
+.lang-toggle button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Header */
+.lesson-header {
+  padding: 36px 0 12px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px;
+}
+
+.lesson-number {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.lesson-header h1.en {
+  font-size: 30px;
+  margin: 0 0 6px;
+  font-weight: 800;
+}
+
+.lesson-header h1.zh {
+  font-size: 20px;
+  margin: 0;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Section heading, bilingual */
+.section-title {
+  margin-top: 44px;
+  margin-bottom: 14px;
+}
+
+.section-title .en {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--en-color);
+}
+
+.section-title .zh {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.sub-title .en { font-size: 17px; font-weight: 700; }
+.sub-title .zh { font-size: 14px; font-weight: 600; color: var(--accent); margin-top: 1px; }
+.sub-title { margin-top: 26px; margin-bottom: 8px; }
+
+/* Bilingual row */
+.bi-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 18px;
+  align-items: start;
+}
+
+.col-en, .col-zh {
+  padding: 2px 0;
+}
+
+.col-zh {
+  color: var(--zh-color);
+  background: var(--zh-bg);
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.col-en {
+  padding: 10px 16px;
+}
+
+.bi-row p { margin: 0 0 10px; }
+.bi-row ul { margin: 0 0 10px; padding-left: 20px; }
+.bi-row li { margin-bottom: 6px; }
+
+/* Callout box */
+.callout {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 22px 0;
+}
+
+.callout .bi-row .col-zh { background: #ffffff; }
+
+.callout-title {
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.callout-title .en { display:block; font-size: 16px; }
+.callout-title .zh { display:block; font-size: 14px; color: var(--accent); margin-top:2px; }
+
+/* Language toggle behavior */
+body.show-en-only .col-zh,
+body.show-en-only .section-title .zh,
+body.show-en-only .sub-title .zh,
+body.show-en-only .callout-title .zh,
+body.show-en-only .lesson-header h1.zh { display: none; }
+
+body.show-zh-only .col-en,
+body.show-zh-only .section-title .en,
+body.show-zh-only .sub-title .en,
+body.show-zh-only .callout-title .en,
+body.show-zh-only .lesson-header h1.en { display: none; }
+
+body.show-en-only .bi-row,
+body.show-zh-only .bi-row {
+  grid-template-columns: 1fr;
+}
+
+/* Index page */
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.lesson-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: box-shadow .15s, transform .15s;
+}
+.lesson-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+.lesson-card .num {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.lesson-card .title-en { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+.lesson-card .title-zh { color: var(--muted); font-size: 14px; }
+
+.hero {
+  padding: 48px 0 8px;
+}
+.hero h1 { font-size: 32px; margin-bottom: 6px; }
+.hero p { color: var(--muted); font-size: 15px; }
+
+/* Bottom nav */
+.bottomnav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.bottomnav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+}
+.bottomnav a:hover { text-decoration: underline; }
+
+@media (max-width: 760px) {
+  .bi-row { grid-template-columns: 1fr; gap: 8px; }
+  .col-zh { margin-top: 4px; }
+  .lesson-header h1.en { font-size: 24px; }
+  .container { padding: 16px 16px 60px; }
+  .topnav-inner { padding: 10px 16px; }
+  .tts-rate-select { max-width: 90px; }
+}
