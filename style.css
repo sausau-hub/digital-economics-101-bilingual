@@ -274,6 +274,15 @@ body.show-zh-only .bi-row {
   grid-template-columns: 1fr;
 }
 
+/* On mobile, .interleave rows switch col-en/col-zh to display:contents (see the
+   @media block below) so their paragraphs can interleave — that has higher specificity
+   than the plain .col-zh/.col-en hide rules above, so re-assert the hide explicitly here
+   for interleaved rows, otherwise EN-only/ZH-only mode would fail to hide them. */
+body.show-en-only .bi-row.interleave .col-zh,
+body.show-zh-only .bi-row.interleave .col-en {
+  display: none;
+}
+
 /* Index page */
 .lesson-grid {
   display: grid;
@@ -336,4 +345,29 @@ body.show-zh-only .bi-row {
   .container { padding: 16px 16px 60px; }
   .topnav-inner { padding: 10px 16px; }
   .tts-rate-select { max-width: 90px; }
+
+  /* Sentence-by-sentence interleave (EN line, then its ZH line, repeating) for plain
+     paragraph rows on phones — set up by script.js, which tags qualifying rows with
+     .interleave and assigns each paragraph's visual order. List rows (bullets) are left
+     as stacked whole-column blocks above, since interleaving individual <li>s reliably
+     is fragile. */
+  .bi-row.interleave {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bi-row.interleave .col-en,
+  .bi-row.interleave .col-zh {
+    display: contents;
+  }
+  .bi-row.interleave .col-en p {
+    margin: 0;
+    padding: 0 2px;
+  }
+  .bi-row.interleave .col-zh p {
+    margin: 0;
+    background: var(--zh-bg);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
 }

@@ -18,6 +18,30 @@
     });
   }
 
+  // ---- Sentence-by-sentence interleave (mainly for phones) ----
+  // For rows that are plain paragraphs (no bullet list), tag them with .interleave and
+  // give each <p> a CSS "order" so the mobile stylesheet can lay them out as
+  // EN sentence, ZH sentence, EN sentence, ZH sentence... (see the .interleave rules
+  // in style.css). Desktop's two-column layout is untouched — order only takes effect
+  // once the mobile media query switches col-en/col-zh to display:contents.
+  function initInterleave() {
+    document.querySelectorAll('.bi-row').forEach(function (row) {
+      var colEn = row.querySelector('.col-en');
+      var colZh = row.querySelector('.col-zh');
+      if (!colEn || !colZh) return;
+      if (colEn.querySelector('ul') || colZh.querySelector('ul')) return;
+      var enPs = Array.prototype.slice.call(colEn.querySelectorAll('p'));
+      var zhPs = Array.prototype.slice.call(colZh.querySelectorAll('p'));
+      if (!enPs.length || !zhPs.length) return;
+      row.classList.add('interleave');
+      var n = Math.max(enPs.length, zhPs.length);
+      for (var i = 0; i < n; i++) {
+        if (enPs[i]) enPs[i].style.order = String(i * 2 + 1);
+        if (zhPs[i]) zhPs[i].style.order = String(i * 2 + 2);
+      }
+    });
+  }
+
   // ---- English read-aloud ----
   // Primary source: pre-rendered neural-voice mp3 clips in ./audio/<id>.mp3 (one per
   // paragraph/bullet, generated offline with edge-tts). Falls back to the browser's
@@ -253,6 +277,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initLangToggle();
+    initInterleave();
     initTTS();
   });
 })();
